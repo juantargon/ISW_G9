@@ -1,29 +1,18 @@
 body {
   background-color: #e5ecd7;
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.divBody {
-  background-color: white;
-  min-height: 84vh;
-  padding: 1rem;
+.full-width{
+  width: 100%;
 }
 
 /* pie de la pagina */
 footer {
   padding: 1rem;
 }
-/* 
   
-  h3 {
-    color: white;
-    text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
-    border-bottom-style: solid;
-    border-color: gray;
-    border-bottom-width: thin;
-    padding-bottom: 0.3em;
-    margin-bottom: 0.5em;
-  } */
-
 .encabezado {
   font-size: 1rem;
   font-weight: 400;
@@ -43,31 +32,6 @@ footer {
 
 .pagoTarjeta {
   margin-left: 15px;
-}
-
-.subtitulo {
-  background-color: #afb4bd;
-  color: white;
-  border-radius: 5px 5px 0px 0px;
-  font-style: italic;
-  font-weight: 500;
-  padding: 0.3em 0 0.3em 1em;
-  margin: 0.8em 0em 0.5em 0em;
-  /* font-weight: bold; */
-  background-image: linear-gradient(
-    to right,
-    rgba(175, 18, 189, 1),
-    rgba(175, 180, 220, 0.5)
-  );
-}
-
-.subtituloTabla {
-  /* usar class="subtitulo subtituloTabla" */
-  margin-bottom: 0px; /* para que se pegue a la tabla */
-}
-.subtitulo i.fas {
-  /* separar icono del texto en los subtitulos */
-  margin-right: 1em;
 }
 
 /* todos los formularios */
@@ -105,55 +69,11 @@ form {
   background-color: #d6cda4;
 }
 
-/* todos los labels menos los de los radio y check */
-label:not([class^="custom-control"]) {
-  background-color: #d7dfe7;
-  border-radius: 0.625em 0.2em 0rem 0.625em;
-  border-bottom: solid;
-  margin-right: -0.9em; /* para que columna label este cerca del input*/
-  padding-left: 0.5em;
-  display: block;
-  height: 90%;
-}
-
-/*<=576*/
-@media only screen and (max-width: 575px) {
-  label:not([class^="custom-control"]) {
-    margin-right: 0em;
-    margin-top: 0.3rem; /* para separar grupo label/input */
-  }
-}
-
-/*>=576*/
-@media only screen and (min-width: 576px) {
-  .inputMedio {
-    width: 12em;
-  }
-  .inputChico {
-    width: 7em;
-  }
-}
-
-.pyBadge {
-  background-color: #6c757d;
-  color: white;
-  /* font-size: 1.1em; */
-  display: inline-block;
-  padding: 0.35em 0.4em;
-  font-weight: 700;
-  line-height: 1;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: baseline;
-  border-radius: 0.25rem;
-}
-
 /* mensajes de validacion */
 .validacion {
   color: rgb(255, 0, 0);
   font-size: 0.9em;
   font-style: italic;
-  padding-left: 1em;
   padding-bottom: 0em;
 }
 
@@ -179,22 +99,6 @@ input {
   text-transform: none;
 }
 
-/* encabezados de tablas */
-thead {
-  /* bootstrap thead-light*/
-  color: #495057;
-  background-color: #aeb7d7; /* #e9ecef; */
-  border-color: #dee2e6;
-}
-
-/* redes al pie de pagina */
-.redes {
-  background-color: blue;
-  color: white;
-  padding: 0.4em;
-  margin: 0.3em;
-  border-radius: 1em;
-}
-
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+

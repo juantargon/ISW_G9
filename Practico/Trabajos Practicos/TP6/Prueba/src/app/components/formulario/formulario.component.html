@@ -1,29 +1,183 @@
 <form name="formRegistro" [formGroup]="FormRegistro">
-  <div class="container">
-    <fieldset>
-      <div class="encabezado">
-        {{ DirecDeEntrega }}
+  <mat-card-content>
+    <div class="encabezado">
+      {{ DirecDeEntrega }}
+    </div>
+    <!--campo Calle-->
+    <div class="row">
+      <div class="col-md-8">
+        <mat-form-field class="full-width">
+          <input formControlName="Calle" matInput placeholder="Calle..." />
+        </mat-form-field>
+        <div
+          class="validacion"
+          *ngIf="
+            (FormRegistro.controls['Calle'].touched || submitted) &&
+            FormRegistro.controls['Calle'].hasError('required')
+          "
+        >
+          Dato requerido.
+        </div>
+        <div
+          class="validacion"
+          *ngIf="
+            (FormRegistro.controls['Calle'].touched || submitted) &&
+            FormRegistro.controls['Calle'].hasError('pattern')
+          "
+        >
+          Dato texto, 4 a 55 caracteres.
+        </div>
       </div>
-      <!--campo Calle-->
+
+      <!--campo Numero-->
+      <div class="col-md-4">
+        <mat-form-field class="full-width">
+          <input formControlName="Numero" matInput placeholder="Número..." />
+        </mat-form-field>
+        <div
+          class="validacion"
+          *ngIf="
+            (FormRegistro.controls['Numero'].touched || submitted) &&
+            FormRegistro.controls['Numero'].hasError('required')
+          "
+        >
+          Dato requerido.
+        </div>
+        <div
+          class="validacion"
+          *ngIf="
+            (FormRegistro.controls['Numero'].touched || submitted) &&
+            FormRegistro.controls['Numero'].hasError('pattern')
+          "
+        >
+          Dato numérico, 1 a 7 dígitos.
+        </div>
+      </div>
+    </div>
+    <!--campo Ciudad-->
+    <div class="row">
+      <div class="col-md-8">
+        <select
+          class="form-control"
+          formControlName="Ciudad"
+          [ngClass]="{
+            'is-invalid':
+              (FormRegistro.controls['Ciudad'].touched || submitted) &&
+              FormRegistro.controls['Ciudad'].errors
+          }"
+        >
+          <option [ngValue]="null" disabled selected>Ciudad...</option>
+          <option *ngFor="let opt of OpcionesCiudad" [ngValue]="opt.Id">
+            {{ opt.Nombre }}
+          </option>
+        </select>
+        <div
+          class="validacion"
+          *ngIf="
+            (FormRegistro.controls['Ciudad'].touched || submitted) &&
+            FormRegistro.controls['Ciudad'].hasError('required')
+          "
+        >
+          Dato requerido.
+        </div>
+      </div>
+    </div>
+
+    <!-- campo Aclaraciones -->
+    <div class="row">
+      <div class="col-md-12">
+        <textarea
+          name="Aclaraciones"
+          rows="3"
+          cols="10"
+          class="form-control"
+          formControlName="Aclaraciones"
+          placeholder="Aclaraciones..."
+        >
+        </textarea>
+      </div>
+    </div>
+    <div class="encabezado">
+      {{ FormaDePago }}
+      <input
+        type="radio"
+        class="rb-seleccion"
+        name="Pago"
+        id="efectivo"
+        checked="checked"
+        (click)="MostrarCamposPago($event)"
+      />Efectivo
+      <input
+        type="radio"
+        class="rb-seleccion"
+        name="Pago"
+        id="Tarjeta"
+        (click)="MostrarCamposPago($event)"
+      />Tarjeta de Crédito/Débito
+    </div>
+
+    <!--campo Monto-->
+    <div class="row" *ngIf="PagoEfectivo">
+      <div class="col-sm-8 col-md-6">
+        <input
+          type="text"
+          name="Monto"
+          class="form-control"
+          formControlName="Monto"
+          placeholder="Monto..."
+          [(ngModel)]="Monto"
+          [ngClass]="{
+            'is-invalid':
+              (FormRegistro.controls['Monto'].touched || submitted) &&
+              FormRegistro.controls['Monto'].errors
+          }"
+        />
+        <div
+          class="validacion"
+          *ngIf="
+            (FormRegistro.controls['Monto'].touched || submitted) &&
+            FormRegistro.controls['Monto'].hasError('required')
+          "
+        >
+          Dato requerido.
+        </div>
+        <div
+          class="validacion"
+          *ngIf="
+            (FormRegistro.controls['Monto'].touched || submitted) &&
+            FormRegistro.controls['Monto'].hasError('pattern')
+          "
+        >
+          Dato numérico, 1 a 5 dígitos.
+        </div>
+      </div>
+    </div>
+
+    <div class="pagoTarjeta" *ngIf="!PagoEfectivo">
+      <div class="encabezado">
+        {{ DatosDelTitular }}
+      </div>
       <div class="row">
-        <div class="col-md-8">
+        <!-- Nombre Titular -->
+        <div class="col-md-6">
           <input
             type="text"
             class="form-control"
-            formControlName="Calle"
-            placeholder="Calle..."
+            formControlName="Nombre"
+            placeholder="Nombre..."
+            [(ngModel)]="TarNombre"
             [ngClass]="{
               'is-invalid':
-                (FormRegistro.controls['Calle'].touched || submitted) &&
-                FormRegistro.controls['Calle'].errors
+                (FormRegistro.controls['Nombre'].touched || submitted) &&
+                FormRegistro.controls['Nombre'].errors
             }"
           />
 
           <div
             class="validacion"
             *ngIf="
-              (FormRegistro.controls['Calle'].touched || submitted) &&
-              FormRegistro.controls['Calle'].hasError('required')
+              (FormRegistro.controls['Nombre'].touched || submitted) &&
+              FormRegistro.controls['Nombre'].hasError('required')
             "
           >
             Dato requerido.
@@ -31,131 +185,72 @@
           <div
             class="validacion"
             *ngIf="
-              (FormRegistro.controls['Calle'].touched || submitted) &&
-              FormRegistro.controls['Calle'].hasError('pattern')
+              (FormRegistro.controls['Nombre'].touched || submitted) &&
+              FormRegistro.controls['Nombre'].hasError('pattern')
             "
           >
             Dato texto, 4 a 55 caracteres.
           </div>
         </div>
-
-        <!--campo Numero-->
-        <div class="col-md-4">
+        <!-- Apellido Titular -->
+        <div class="col-md-6">
           <input
             type="text"
-            name="Numero"
             class="form-control"
-            formControlName="Numero"
-            placeholder="Número..."
+            formControlName="Apellido"
+            placeholder="Apellido..."
+            [(ngModel)]="TarApellido"
             [ngClass]="{
               'is-invalid':
-                (FormRegistro.controls['Numero'].touched || submitted) &&
-                FormRegistro.controls['Numero'].errors
+                (FormRegistro.controls['Apellido'].touched || submitted) &&
+                FormRegistro.controls['Apellido'].errors
             }"
           />
-          <div
-            class="validacion"
-            *ngIf="
-              (FormRegistro.controls['Numero'].touched || submitted) &&
-              FormRegistro.controls['Numero'].hasError('required')
-            "
-          >
-            Dato requerido.
-          </div>
-          <div
-            class="validacion"
-            *ngIf="
-              (FormRegistro.controls['Numero'].touched || submitted) &&
-              FormRegistro.controls['Numero'].hasError('pattern')
-            "
-          >
-            Dato numérico, 1 a 7 dígitos.
-          </div>
-        </div>
-      </div>
-      <!--campo Ciudad-->
-      <div class="row">
-        <div class="col-md-8">
-          <select
-            class="form-control"
-            formControlName="Ciudad"
-            [ngClass]="{
-              'is-invalid':
-                (FormRegistro.controls['Ciudad'].touched || submitted) &&
-                FormRegistro.controls['Ciudad'].errors
-            }"
-          >
-            <option [ngValue]="null" disabled selected>Ciudad...</option>
-            <option *ngFor="let opt of OpcionesCiudad" [ngValue]="opt.Id">
-              {{ opt.Nombre }}
-            </option>
-          </select>
-          <div
-            class="validacion"
-            *ngIf="
-              (FormRegistro.controls['Ciudad'].touched || submitted) &&
-              FormRegistro.controls['Ciudad'].hasError('required')
-            "
-          >
-            Dato requerido.
-          </div>
-        </div>
-      </div>
 
-      <!-- campo Aclaraciones -->
-      <div class="row">
-        <div class="col-md-12">
-          <textarea
-            name="Aclaraciones"
-            rows="3"
-            cols="10"
-            class="form-control"
-            formControlName="Aclaraciones"
-            placeholder="Aclaraciones..."
+          <div
+            class="validacion"
+            *ngIf="
+              (FormRegistro.controls['Apellido'].touched || submitted) &&
+              FormRegistro.controls['Apellido'].hasError('required')
+            "
           >
-          </textarea>
+            Dato requerido.
+          </div>
+          <div
+            class="validacion"
+            *ngIf="
+              (FormRegistro.controls['Apellido'].touched || submitted) &&
+              FormRegistro.controls['Apellido'].hasError('pattern')
+            "
+          >
+            Dato texto, 4 a 55 caracteres.
+          </div>
         </div>
       </div>
       <div class="encabezado">
-        {{ FormaDePago }}
-        <input
-          type="radio"
-          class="rb-seleccion"
-          name="Pago"
-          id="efectivo"
-          checked="checked"
-          (click)="MostrarCamposPago($event)"
-        />Efectivo
-        <input
-          type="radio"
-          class="rb-seleccion"
-          name="Pago"
-          id="Tarjeta"
-          (click)="MostrarCamposPago($event)"
-        />Tarjeta de Crédito/Débito
+        {{ DatosDeTarjeta }}
       </div>
-
-      <!--campo Monto-->
-      <div class="row" *ngIf="PagoEfectivo">
-        <div class="col-sm-8 col-md-6">
+      <div class="row">
+        <!-- Numero de Tarjeta -->
+        <div class="col-sm-8 col-md-7">
           <input
             type="text"
-            name="Monto"
+            name="NumeroTarjeta"
             class="form-control"
-            formControlName="Monto"
-            placeholder="Monto..."
-            [(ngModel)]="Monto"
+            formControlName="NumeroTarjeta"
+            placeholder="Numero..."
+            [(ngModel)]="TarNumero"
             [ngClass]="{
               'is-invalid':
-                (FormRegistro.controls['Monto'].touched || submitted) &&
-                FormRegistro.controls['Monto'].errors
+                (FormRegistro.controls['NumeroTarjeta'].touched || submitted) &&
+                FormRegistro.controls['NumeroTarjeta'].errors
             }"
           />
           <div
             class="validacion"
             *ngIf="
-              (FormRegistro.controls['Monto'].touched || submitted) &&
-              FormRegistro.controls['Monto'].hasError('required')
+              (FormRegistro.controls['NumeroTarjeta'].touched || submitted) &&
+              FormRegistro.controls['NumeroTarjeta'].hasError('required')
             "
           >
             Dato requerido.
@@ -163,245 +258,34 @@
           <div
             class="validacion"
             *ngIf="
-              (FormRegistro.controls['Monto'].touched || submitted) &&
-              FormRegistro.controls['Monto'].hasError('pattern')
+              (FormRegistro.controls['NumeroTarjeta'].touched || submitted) &&
+              FormRegistro.controls['NumeroTarjeta'].hasError('pattern')
             "
           >
-            Dato numérico, 1 a 5 dígitos.
+            Dato numérico, 16 dígitos y comenzar con 5.
           </div>
         </div>
-      </div>
-
-      <div class="pagoTarjeta" *ngIf="!PagoEfectivo">
-        <div class="encabezado">
-          {{ DatosDelTitular }}
-        </div>
-        <div class="row">
-          <!-- Nombre Titular -->
-          <div class="col-md-6">
-            <input
-              type="text"
-              class="form-control"
-              formControlName="Nombre"
-              placeholder="Nombre..."
-              [(ngModel)]="TarNombre"
-              [ngClass]="{
-                'is-invalid':
-                  (FormRegistro.controls['Nombre'].touched || submitted) &&
-                  FormRegistro.controls['Nombre'].errors
-              }"
-            />
-
-            <div
-              class="validacion"
-              *ngIf="
-                (FormRegistro.controls['Nombre'].touched || submitted) &&
-                FormRegistro.controls['Nombre'].hasError('required')
-              "
-            >
-              Dato requerido.
-            </div>
-            <div
-              class="validacion"
-              *ngIf="
-                (FormRegistro.controls['Nombre'].touched || submitted) &&
-                FormRegistro.controls['Nombre'].hasError('pattern')
-              "
-            >
-              Dato texto, 4 a 55 caracteres.
-            </div>
-          </div>
-          <!-- Apellido Titular -->
-          <div class="col-md-6">
-            <input
-              type="text"
-              class="form-control"
-              formControlName="Apellido"
-              placeholder="Apellido..."
-              [(ngModel)]="TarApellido"
-              [ngClass]="{
-                'is-invalid':
-                  (FormRegistro.controls['Apellido'].touched || submitted) &&
-                  FormRegistro.controls['Apellido'].errors
-              }"
-            />
-
-            <div
-              class="validacion"
-              *ngIf="
-                (FormRegistro.controls['Apellido'].touched || submitted) &&
-                FormRegistro.controls['Apellido'].hasError('required')
-              "
-            >
-              Dato requerido.
-            </div>
-            <div
-              class="validacion"
-              *ngIf="
-                (FormRegistro.controls['Apellido'].touched || submitted) &&
-                FormRegistro.controls['Apellido'].hasError('pattern')
-              "
-            >
-              Dato texto, 4 a 55 caracteres.
-            </div>
-          </div>
-        </div>
-        <div class="encabezado">
-          {{ DatosDeTarjeta }}
-        </div>
-        <div class="row">
-          <!-- Numero de Tarjeta -->
-          <div class="col-sm-8 col-md-7">
-            <input
-              type="text"
-              name="NumeroTarjeta"
-              class="form-control"
-              formControlName="NumeroTarjeta"
-              placeholder="Numero..."
-              [(ngModel)]="TarNumero"
-              [ngClass]="{
-                'is-invalid':
-                  (FormRegistro.controls['NumeroTarjeta'].touched ||
-                    submitted) &&
-                  FormRegistro.controls['NumeroTarjeta'].errors
-              }"
-            />
-            <div
-              class="validacion"
-              *ngIf="
-                (FormRegistro.controls['NumeroTarjeta'].touched || submitted) &&
-                FormRegistro.controls['NumeroTarjeta'].hasError('required')
-              "
-            >
-              Dato requerido.
-            </div>
-            <div
-              class="validacion"
-              *ngIf="
-                (FormRegistro.controls['NumeroTarjeta'].touched || submitted) &&
-                FormRegistro.controls['NumeroTarjeta'].hasError('pattern')
-              "
-            >
-              Dato numérico, 16 dígitos y comenzar con 5.
-            </div>
-          </div>
-          <!-- Codigo de Seguridad -->
-          <div class="col-sm-8 col-md-2">
-            <input
-              type="text"
-              name="CodigoSeguridad"
-              class="form-control"
-              formControlName="CodigoSeguridad"
-              placeholder="CNN..."
-              [(ngModel)]="TarCodigoSeguridad"
-              [ngClass]="{
-                'is-invalid':
-                  (FormRegistro.controls['CodigoSeguridad'].touched ||
-                    submitted) &&
-                  FormRegistro.controls['CodigoSeguridad'].errors
-              }"
-            />
-            <div
-              class="validacion"
-              *ngIf="
-                (FormRegistro.controls['CodigoSeguridad'].touched ||
-                  submitted) &&
-                FormRegistro.controls['CodigoSeguridad'].hasError('required')
-              "
-            >
-              Dato requerido.
-            </div>
-            <div
-              class="validacion"
-              *ngIf="
-                (FormRegistro.controls['CodigoSeguridad'].touched ||
-                  submitted) &&
-                FormRegistro.controls['CodigoSeguridad'].hasError('pattern')
-              "
-            >
-              Dato numérico, 3 dígitos.
-            </div>
-          </div>
-          <!--Fecha de Expiracion-->
-          <div class="col-md-3">
-            <input
-              class="form-control"
-              formControlName="FechaExpiracion"
-              name="FechaExpiracion"
-              placeholder="Fecha Expiración..."
-              [(ngModel)]="TarFechaExpiracion"
-              [ngClass]="{
-                'is-invalid':
-                  (FormRegistro.controls['FechaExpiracion'].touched ||
-                    submitted) &&
-                  FormRegistro.controls['FechaExpiracion'].errors
-              }"
-            />
-
-            <div
-              class="validacion"
-              *ngIf="
-                (FormRegistro.controls['FechaExpiracion'].touched ||
-                  submitted) &&
-                FormRegistro.controls['FechaExpiracion'].hasError('required')
-              "
-            >
-              Dato requerido.
-            </div>
-            <div
-              class="validacion"
-              *ngIf="
-                (FormRegistro.controls['FechaExpiracion'].touched ||
-                  submitted) &&
-                FormRegistro.controls['FechaExpiracion'].hasError('pattern')
-              "
-            >
-              Dato fecha, formato mm/aaaa.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="encabezado">
-        {{ CuandoPedido }}
-        <input
-          type="radio"
-          class="rb-seleccion"
-          name="MomentoEntrega"
-          id="ahora"
-          checked="checked"
-          (click)="MostrarCamposEntrega($event)"
-        />Lo Antes Posible
-        <input
-          type="radio"
-          class="rb-seleccion"
-          name="MomentoEntrega"
-          id="fechaEspec"
-          (click)="MostrarCamposEntrega($event)"
-        />Fecha/Hora Específica
-      </div>
-
-      <!--Hora Entrega-->
-      <div class="row" *ngIf="HoraEspecifica">
-        <div class="col-md-4">
+        <!-- Codigo de Seguridad -->
+        <div class="col-sm-8 col-md-2">
           <input
-            type="time"
-            name="HoraEntrega"
+            type="text"
+            name="CodigoSeguridad"
             class="form-control"
-            formControlName="HoraEntrega"
-            placeholder="Hora..."
-            [(ngModel)]="HoraEntrega"
+            formControlName="CodigoSeguridad"
+            placeholder="CNN..."
+            [(ngModel)]="TarCodigoSeguridad"
             [ngClass]="{
               'is-invalid':
-                (FormRegistro.controls['HoraEntrega'].touched || submitted) &&
-                FormRegistro.controls['HoraEntrega'].errors
+                (FormRegistro.controls['CodigoSeguridad'].touched ||
+                  submitted) &&
+                FormRegistro.controls['CodigoSeguridad'].errors
             }"
           />
           <div
             class="validacion"
             *ngIf="
-              (FormRegistro.controls['HoraEntrega'].touched || submitted) &&
-              FormRegistro.controls['HoraEntrega'].hasError('required')
+              (FormRegistro.controls['CodigoSeguridad'].touched || submitted) &&
+              FormRegistro.controls['CodigoSeguridad'].hasError('required')
             "
           >
             Dato requerido.
@@ -409,23 +293,118 @@
           <div
             class="validacion"
             *ngIf="
-              (FormRegistro.controls['HoraEntrega'].touched || submitted) &&
-              FormRegistro.controls['HoraEntrega'].hasError('pattern')
+              (FormRegistro.controls['CodigoSeguridad'].touched || submitted) &&
+              FormRegistro.controls['CodigoSeguridad'].hasError('pattern')
             "
           >
-            Hora no valida, formato hh:mm 24hs.
+            Dato numérico, 3 dígitos.
           </div>
         </div>
-        <!-- Fecha Entrega -->
-        <div class="col-md-4">
-          <mat-form-field class="form-control" appearance="standard">
-            <mat-label></mat-label>
-            <input matInput [matDatepicker]="picker">
-            <mat-hint></mat-hint>
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-          <!-- <input
+        <!--Fecha de Expiracion-->
+        <div class="col-md-3">
+          <input
+            class="form-control"
+            formControlName="FechaExpiracion"
+            name="FechaExpiracion"
+            placeholder="Fecha Expiración..."
+            [(ngModel)]="TarFechaExpiracion"
+            [ngClass]="{
+              'is-invalid':
+                (FormRegistro.controls['FechaExpiracion'].touched ||
+                  submitted) &&
+                FormRegistro.controls['FechaExpiracion'].errors
+            }"
+          />
+
+          <div
+            class="validacion"
+            *ngIf="
+              (FormRegistro.controls['FechaExpiracion'].touched || submitted) &&
+              FormRegistro.controls['FechaExpiracion'].hasError('required')
+            "
+          >
+            Dato requerido.
+          </div>
+          <div
+            class="validacion"
+            *ngIf="
+              (FormRegistro.controls['FechaExpiracion'].touched || submitted) &&
+              FormRegistro.controls['FechaExpiracion'].hasError('pattern')
+            "
+          >
+            Dato fecha, formato mm/aaaa.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="encabezado">
+      {{ CuandoPedido }}
+      <input
+        type="radio"
+        class="rb-seleccion"
+        name="MomentoEntrega"
+        id="ahora"
+        checked="checked"
+        (click)="MostrarCamposEntrega($event)"
+      />Lo Antes Posible
+      <input
+        type="radio"
+        class="rb-seleccion"
+        name="MomentoEntrega"
+        id="fechaEspec"
+        (click)="MostrarCamposEntrega($event)"
+      />Fecha/Hora Específica
+    </div>
+
+    <!--Hora Entrega-->
+    <div class="row" *ngIf="HoraEspecifica">
+      <div class="col-md-4">
+        <input
+          type="time"
+          name="HoraEntrega"
+          class="form-control"
+          formControlName="HoraEntrega"
+          placeholder="Hora..."
+          [(ngModel)]="HoraEntrega"
+          [ngClass]="{
+            'is-invalid':
+              (FormRegistro.controls['HoraEntrega'].touched || submitted) &&
+              FormRegistro.controls['HoraEntrega'].errors
+          }"
+        />
+        <div
+          class="validacion"
+          *ngIf="
+            (FormRegistro.controls['HoraEntrega'].touched || submitted) &&
+            FormRegistro.controls['HoraEntrega'].hasError('required')
+          "
+        >
+          Dato requerido.
+        </div>
+        <div
+          class="validacion"
+          *ngIf="
+            (FormRegistro.controls['HoraEntrega'].touched || submitted) &&
+            FormRegistro.controls['HoraEntrega'].hasError('pattern')
+          "
+        >
+          Hora no valida, formato hh:mm 24hs.
+        </div>
+      </div>
+      <!-- Fecha Entrega -->
+      <div class="col-md-4">
+        <mat-form-field class="form-control" appearance="standard">
+          <mat-label></mat-label>
+          <input matInput [matDatepicker]="picker" />
+          <mat-hint></mat-hint>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <!-- <input
               type="date"
               name="FechaEntrega"
               class="form-control"
@@ -438,35 +417,34 @@
                   FormRegistro.controls['FechaEntrega'].errors
               }"
             /> -->
-          <div
-            class="validacion"
-            *ngIf="
-              (FormRegistro.controls['FechaEntrega'].touched || submitted) &&
-              FormRegistro.controls['FechaEntrega'].hasError('required')
-            "
-          >
-            Dato requerido.
-          </div>
-          <div
-            class="validacion"
-            *ngIf="
-              (FormRegistro.controls['FechaEntrega'].touched || submitted) &&
-              FormRegistro.controls['FechaEntrega'].hasError('pattern')
-            "
-          >
-            Ingrese una fecha correcta.
-          </div>
+        <div
+          class="validacion"
+          *ngIf="
+            (FormRegistro.controls['FechaEntrega'].touched || submitted) &&
+            FormRegistro.controls['FechaEntrega'].hasError('required')
+          "
+        >
+          Dato requerido.
+        </div>
+        <div
+          class="validacion"
+          *ngIf="
+            (FormRegistro.controls['FechaEntrega'].touched || submitted) &&
+            FormRegistro.controls['FechaEntrega'].hasError('pattern')
+          "
+        >
+          Ingrese una fecha correcta.
         </div>
       </div>
-    </fieldset>
-
-    <!--texto: Revisar los datos ingresados...-->
-    <div
-      *ngIf="submitted && FormRegistro.invalid"
-      class="row alert alert-danger mensajesAlert"
-    >
-      {{ Mensajes["RD"] }}
     </div>
+  </mat-card-content>
+
+  <!--texto: Revisar los datos ingresados...-->
+  <div
+    *ngIf="submitted && FormRegistro.invalid"
+    class="row alert alert-danger mensajesAlert"
+  >
+    {{ Mensajes["RD"] }}
   </div>
 </form>
 

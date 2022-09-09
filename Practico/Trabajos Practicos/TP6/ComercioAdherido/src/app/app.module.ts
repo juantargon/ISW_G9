@@ -8,7 +8,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegistroPedidoComponent } from './components/registro-pedido/registro-pedido.component'
 
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatGridListModule } from '@angular/material/grid-list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -33,7 +32,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     ReactiveFormsModule,
     MatToolbarModule,
-    MatGridListModule,
     NgbModule,
     MatFormFieldModule,
     MatInputModule,

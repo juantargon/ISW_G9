@@ -13,14 +13,34 @@ import { FooterComponent } from './components/footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-// import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
   declarations: [AppComponent, MenuComponent, FormularioComponent, NavbarComponent, FooterComponent],
-  imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, MatDatepickerModule, MatNativeDateModule,  ],
+  imports: [
+    BrowserModule, 
+    AppRoutingModule,
+    NgbModule, 
+    FormsModule, 
+    ReactiveFormsModule, 
+    BrowserAnimationsModule, 
+    MatDatepickerModule, 
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatCardModule,
+    MatButtonModule
+  ],
   providers: [],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: []
 })
 export class AppModule {}
