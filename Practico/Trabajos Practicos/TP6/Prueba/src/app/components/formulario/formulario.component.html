@@ -381,7 +381,7 @@
         />Fecha/Hora Específica
       </div>
 
-      <!--Dia Entrega-->
+      <!--Hora Entrega-->
       <div class="row" *ngIf="HoraEspecifica">
         <div class="col-md-4">
           <input
@@ -418,7 +418,14 @@
         </div>
         <!-- Fecha Entrega -->
         <div class="col-md-4">
-          <input
+          <mat-form-field class="form-control" appearance="fill">
+            <mat-label></mat-label>
+            <input matInput [matDatepicker]="picker">
+            <mat-hint></mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <!-- <input
               type="date"
               name="FechaEntrega"
               class="form-control"
@@ -430,7 +437,7 @@
                   (FormRegistro.controls['FechaEntrega'].touched || submitted) &&
                   FormRegistro.controls['FechaEntrega'].errors
               }"
-            />
+            /> -->
           <div
             class="validacion"
             *ngIf="

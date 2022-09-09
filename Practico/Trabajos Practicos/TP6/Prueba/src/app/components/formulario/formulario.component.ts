@@ -143,7 +143,7 @@ export class FormularioComponent implements OnInit {
       ]);
       FechaExpiracion?.setValidators([
         Validators.required,
-        Validators.pattern('(0[1-9]|1[012])[-/](19|20)[0-9]{2}'),
+        Validators.pattern('(09|1[012])[-/](20)[2-9]{2}'),
       ]);
     }
   }
@@ -165,11 +165,11 @@ export class FormularioComponent implements OnInit {
 
       HoraEntrega?.setValidators([
         Validators.required,
-        Validators.pattern('(0[0-9]|1[0-9]|2[0-3])[-:]([0-5][0-9])'),
+        Validators.pattern('(0[0-9]|1[0-9]|2[0-3])[:]([0-5][0-9])'),
       ]);
       FechaEntrega?.setValidators([
         Validators.required,
-        Validators.pattern('(2022)[--](09)[--](0[89]|[12][0-9]|3[01])'),
+        Validators.pattern('(2022)[-](09)[-](0[9]|[12][0-9]|3[01])'),
       ]);
     } else {
       this.HoraEspecifica = false;
