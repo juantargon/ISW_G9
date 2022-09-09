@@ -1,0 +1,21 @@
+i {
+    margin-left: 1em
+}
+nav {
+    padding: 0.7em;
+    box-shadow: 0rem 0rem 2rem 0rem rgb(99, 99, 99);
+    background-color: #1C6758;
+}
+
+.nav-item {
+    text-align: right;
+    margin-right: 2rem;
+}
+
+.nav-link {
+    font-size: small;
+}
+
+.navbar-brand {
+    font-size:x-large;
+}
