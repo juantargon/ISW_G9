@@ -163,7 +163,7 @@ export class FormularioComponent implements OnInit {
       ]);
       FechaExpiracion?.setValidators([
         Validators.required,
-        Validators.pattern('(0[9]|1[012])[/](20)2[2-9]|3[0-9]|4[0-9]'),
+        Validators.pattern('(0[9]|1[012])[/](20)(2[2-9]|3[0-9]|4[0-9])'),
       ]);
     }
   }
