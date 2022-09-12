@@ -1,455 +1,486 @@
-<form name="formRegistro" [formGroup]="FormRegistro">
-  <mat-card-content>
-    <div class="encabezado">
-      {{ DirecDeEntrega }}
-    </div>
-    <!--campo Calle-->
-    <div class="row">
-      <div class="col-md-8">
-        <mat-form-field class="full-width">
-          <input formControlName="Calle" matInput placeholder="Calle..." />
-        </mat-form-field>
-        <div
-          class="validacion"
-          *ngIf="
-            (FormRegistro.controls['Calle'].touched || submitted) &&
-            FormRegistro.controls['Calle'].hasError('required')
-          "
-        >
-          Dato requerido.
+<div class="row">
+  <div class="col-md-7">
+    <form name="formRegistro" [formGroup]="FormRegistro">
+      <mat-card-content>
+        <div class="encabezado">
+          {{ DirecDeEntrega }}
         </div>
-        <div
-          class="validacion"
-          *ngIf="
-            (FormRegistro.controls['Calle'].touched || submitted) &&
-            FormRegistro.controls['Calle'].hasError('pattern')
-          "
-        >
-          Dato texto, 4 a 55 caracteres.
-        </div>
-      </div>
+        <!--campo Calle-->
+        <div class="row">
+          <div class="col-md-8">
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Calle...</mat-label>
+              <input
+                formControlName="Calle"
+                matInput
+                [errorStateMatcher]="matcher"
+                required
+              />
+            </mat-form-field>
+            <mat-error
+              *ngIf="
+                (FormRegistro.controls['Calle'].touched || submitted) &&
+                FormRegistro.controls['Calle'].hasError('required')
+              "
+            >
+              Dato <strong>requerido.</strong>
+            </mat-error>
+            <mat-error
+              *ngIf="
+                (FormRegistro.controls['Calle'].touched || submitted) &&
+                FormRegistro.controls['Calle'].hasError('pattern')
+              "
+            >
+              Dato texto, 4 a 55 caracteres.
+            </mat-error>
+          </div>
 
-      <!--campo Numero-->
-      <div class="col-md-4">
-        <mat-form-field class="full-width">
-          <input formControlName="Numero" matInput placeholder="Número..." />
-        </mat-form-field>
-        <div
-          class="validacion"
-          *ngIf="
-            (FormRegistro.controls['Numero'].touched || submitted) &&
-            FormRegistro.controls['Numero'].hasError('required')
-          "
-        >
-          Dato requerido.
+          <!--campo Numero-->
+          <div class="col-md-4">
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Número...</mat-label>
+              <input
+                formControlName="Numero"
+                matInput
+                [errorStateMatcher]="matcher"
+              />
+            </mat-form-field>
+            <mat-error
+              *ngIf="
+                (FormRegistro.controls['Numero'].touched || submitted) &&
+                FormRegistro.controls['Numero'].hasError('required')
+              "
+            >
+              Dato <strong>requerido.</strong>
+            </mat-error>
+            <mat-error
+              *ngIf="
+                (FormRegistro.controls['Numero'].touched || submitted) &&
+                FormRegistro.controls['Numero'].hasError('pattern')
+              "
+            >
+              Dato numérico, 1 a 7 dígitos.
+            </mat-error>
+          </div>
         </div>
-        <div
-          class="validacion"
-          *ngIf="
-            (FormRegistro.controls['Numero'].touched || submitted) &&
-            FormRegistro.controls['Numero'].hasError('pattern')
-          "
-        >
-          Dato numérico, 1 a 7 dígitos.
+        <!--campo Ciudad-->
+        <div class="row">
+          <div class="col-md-8">
+            <mat-form-field
+              class="full-width"
+              appearance="outline"
+              style="margin-bottom: 0.2em"
+            >
+              <mat-label>Ciudad...</mat-label>
+              <mat-select
+                formControlName="Ciudad"
+                [errorStateMatcher]="matcher"
+                required
+              >
+                <mat-option
+                  *ngFor="let ciudad of OpcionesCiudad"
+                  [value]="ciudad.value"
+                >
+                  {{ ciudad.Nombre }}
+                </mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="
+                  (FormRegistro.controls['Ciudad'].touched || submitted) &&
+                  FormRegistro.controls['Ciudad'].hasError('required')
+                "
+                style="font-size: 14px"
+                >Dato <strong>requerido.</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
         </div>
-      </div>
-    </div>
-    <!--campo Ciudad-->
-    <div class="row">
-      <div class="col-md-8">
-        <select
-          class="form-control"
-          formControlName="Ciudad"
-          [ngClass]="{
-            'is-invalid':
-              (FormRegistro.controls['Ciudad'].touched || submitted) &&
-              FormRegistro.controls['Ciudad'].errors
-          }"
-        >
-          <option [ngValue]="null" disabled selected>Ciudad...</option>
-          <option *ngFor="let opt of OpcionesCiudad" [ngValue]="opt.Id">
-            {{ opt.Nombre }}
-          </option>
-        </select>
-        <div
-          class="validacion"
-          *ngIf="
-            (FormRegistro.controls['Ciudad'].touched || submitted) &&
-            FormRegistro.controls['Ciudad'].hasError('required')
-          "
-        >
-          Dato requerido.
-        </div>
-      </div>
-    </div>
 
-    <!-- campo Aclaraciones -->
-    <div class="row">
-      <div class="col-md-12">
-        <textarea
-          name="Aclaraciones"
-          rows="3"
-          cols="10"
-          class="form-control"
-          formControlName="Aclaraciones"
-          placeholder="Aclaraciones..."
-        >
-        </textarea>
-      </div>
-    </div>
-    <div class="encabezado">
-      {{ FormaDePago }}
-      <input
-        type="radio"
-        class="rb-seleccion"
-        name="Pago"
-        id="efectivo"
-        checked="checked"
-        (click)="MostrarCamposPago($event)"
-      />Efectivo
-      <input
-        type="radio"
-        class="rb-seleccion"
-        name="Pago"
-        id="Tarjeta"
-        (click)="MostrarCamposPago($event)"
-      />Tarjeta de Crédito/Débito
-    </div>
-
-    <!--campo Monto-->
-    <div class="row" *ngIf="PagoEfectivo">
-      <div class="col-sm-8 col-md-6">
-        <input
-          type="text"
-          name="Monto"
-          class="form-control"
-          formControlName="Monto"
-          placeholder="Monto..."
-          [(ngModel)]="Monto"
-          [ngClass]="{
-            'is-invalid':
-              (FormRegistro.controls['Monto'].touched || submitted) &&
-              FormRegistro.controls['Monto'].errors
-          }"
-        />
-        <div
-          class="validacion"
-          *ngIf="
-            (FormRegistro.controls['Monto'].touched || submitted) &&
-            FormRegistro.controls['Monto'].hasError('required')
-          "
-        >
-          Dato requerido.
+        <!-- campo Aclaraciones -->
+        <div class="row">
+          <div class="col-md-12">
+            <mat-form-field class="full-width" appearance="outline">
+              <textarea
+                matInput
+                formControlName="Aclaraciones"
+                placeholder="Aclaraciones"
+                matInput
+              ></textarea>
+            </mat-form-field>
+          </div>
         </div>
-        <div
-          class="validacion"
-          *ngIf="
-            (FormRegistro.controls['Monto'].touched || submitted) &&
-            FormRegistro.controls['Monto'].hasError('pattern')
-          "
-        >
-          Dato numérico, 1 a 5 dígitos.
-        </div>
-      </div>
-    </div>
 
-    <div class="pagoTarjeta" *ngIf="!PagoEfectivo">
-      <div class="encabezado">
-        {{ DatosDelTitular }}
-      </div>
-      <div class="row">
-        <!-- Nombre Titular -->
-        <div class="col-md-6">
+        <br />
+
+        <div class="encabezado">
+          {{ FormaDePago }}
           <input
-            type="text"
-            class="form-control"
-            formControlName="Nombre"
-            placeholder="Nombre..."
-            [(ngModel)]="TarNombre"
-            [ngClass]="{
-              'is-invalid':
-                (FormRegistro.controls['Nombre'].touched || submitted) &&
-                FormRegistro.controls['Nombre'].errors
-            }"
-          />
+            type="radio"
+            class="rb-seleccion"
+            name="Pago"
+            id="efectivo"
+            checked="checked"
+            (click)="MostrarCamposPago($event)"
+          />Efectivo
+          <input
+            type="radio"
+            class="rb-seleccion"
+            name="Pago"
+            id="Tarjeta"
+            (click)="MostrarCamposPago($event)"
+          />Tarjeta de Crédito/Débito
+        </div>
 
-          <div
-            class="validacion"
-            *ngIf="
-              (FormRegistro.controls['Nombre'].touched || submitted) &&
-              FormRegistro.controls['Nombre'].hasError('required')
-            "
-          >
-            Dato requerido.
-          </div>
-          <div
-            class="validacion"
-            *ngIf="
-              (FormRegistro.controls['Nombre'].touched || submitted) &&
-              FormRegistro.controls['Nombre'].hasError('pattern')
-            "
-          >
-            Dato texto, 4 a 55 caracteres.
+        <!--campo Monto-->
+        <div class="row" *ngIf="PagoEfectivo">
+          <div class="col-sm-8 col-md-6">
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Monto...</mat-label>
+              <input
+                formControlName="Monto"
+                type="number"
+                matInput
+                [errorStateMatcher]="matcher"
+                [(ngModel)]="Monto"
+              />
+            </mat-form-field>
+            <mat-error
+              *ngIf="
+                (FormRegistro.controls['Monto'].touched || submitted) &&
+                FormRegistro.controls['Monto'].hasError('required')
+              "
+            >
+              Dato <strong>requerido.</strong>
+            </mat-error>
+            <mat-error
+              *ngIf="
+                (FormRegistro.controls['Monto'].touched || submitted) &&
+                Monto < Total
+              "
+            >
+              El monto debe ser mayor al total del pedido.
+            </mat-error>
+            <mat-error
+              *ngIf="
+                (FormRegistro.controls['Monto'].touched || submitted) &&
+                FormRegistro.controls['Monto'].hasError('pattern')
+              "
+            >
+              Dato numérico, 1 a 5 dígitos.
+            </mat-error>
           </div>
         </div>
-        <!-- Apellido Titular -->
-        <div class="col-md-6">
-          <input
-            type="text"
-            class="form-control"
-            formControlName="Apellido"
-            placeholder="Apellido..."
-            [(ngModel)]="TarApellido"
-            [ngClass]="{
-              'is-invalid':
-                (FormRegistro.controls['Apellido'].touched || submitted) &&
-                FormRegistro.controls['Apellido'].errors
-            }"
-          />
 
-          <div
-            class="validacion"
-            *ngIf="
-              (FormRegistro.controls['Apellido'].touched || submitted) &&
-              FormRegistro.controls['Apellido'].hasError('required')
-            "
-          >
-            Dato requerido.
+        <div class="pagoTarjeta" *ngIf="!PagoEfectivo">
+          <div class="encabezado">
+            {{ DatosDelTitular }}
           </div>
-          <div
-            class="validacion"
-            *ngIf="
-              (FormRegistro.controls['Apellido'].touched || submitted) &&
-              FormRegistro.controls['Apellido'].hasError('pattern')
-            "
-          >
-            Dato texto, 4 a 55 caracteres.
-          </div>
-        </div>
-      </div>
-      <div class="encabezado">
-        {{ DatosDeTarjeta }}
-      </div>
-      <div class="row">
-        <!-- Numero de Tarjeta -->
-        <div class="col-sm-8 col-md-7">
-          <input
-            type="text"
-            name="NumeroTarjeta"
-            class="form-control"
-            formControlName="NumeroTarjeta"
-            placeholder="Numero..."
-            [(ngModel)]="TarNumero"
-            [ngClass]="{
-              'is-invalid':
-                (FormRegistro.controls['NumeroTarjeta'].touched || submitted) &&
-                FormRegistro.controls['NumeroTarjeta'].errors
-            }"
-          />
-          <div
-            class="validacion"
-            *ngIf="
-              (FormRegistro.controls['NumeroTarjeta'].touched || submitted) &&
-              FormRegistro.controls['NumeroTarjeta'].hasError('required')
-            "
-          >
-            Dato requerido.
-          </div>
-          <div
-            class="validacion"
-            *ngIf="
-              (FormRegistro.controls['NumeroTarjeta'].touched || submitted) &&
-              FormRegistro.controls['NumeroTarjeta'].hasError('pattern')
-            "
-          >
-            Dato numérico, 16 dígitos y comenzar con 5.
-          </div>
-        </div>
-        <!-- Codigo de Seguridad -->
-        <div class="col-sm-8 col-md-2">
-          <input
-            type="text"
-            name="CodigoSeguridad"
-            class="form-control"
-            formControlName="CodigoSeguridad"
-            placeholder="CNN..."
-            [(ngModel)]="TarCodigoSeguridad"
-            [ngClass]="{
-              'is-invalid':
-                (FormRegistro.controls['CodigoSeguridad'].touched ||
-                  submitted) &&
-                FormRegistro.controls['CodigoSeguridad'].errors
-            }"
-          />
-          <div
-            class="validacion"
-            *ngIf="
-              (FormRegistro.controls['CodigoSeguridad'].touched || submitted) &&
-              FormRegistro.controls['CodigoSeguridad'].hasError('required')
-            "
-          >
-            Dato requerido.
-          </div>
-          <div
-            class="validacion"
-            *ngIf="
-              (FormRegistro.controls['CodigoSeguridad'].touched || submitted) &&
-              FormRegistro.controls['CodigoSeguridad'].hasError('pattern')
-            "
-          >
-            Dato numérico, 3 dígitos.
-          </div>
-        </div>
-        <!--Fecha de Expiracion-->
-        <div class="col-md-3">
-          <input
-            class="form-control"
-            formControlName="FechaExpiracion"
-            name="FechaExpiracion"
-            placeholder="Fecha Expiración..."
-            [(ngModel)]="TarFechaExpiracion"
-            [ngClass]="{
-              'is-invalid':
-                (FormRegistro.controls['FechaExpiracion'].touched ||
-                  submitted) &&
-                FormRegistro.controls['FechaExpiracion'].errors
-            }"
-          />
+          <div class="row">
+            <!-- Nombre Titular -->
+            <div class="col-md-6">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Nombre...</mat-label>
+                <input
+                  formControlName="Nombre"
+                  matInput
+                  [errorStateMatcher]="matcher"
+                  [(ngModel)]="TarNombre"
+                />
+              </mat-form-field>
 
-          <div
-            class="validacion"
-            *ngIf="
-              (FormRegistro.controls['FechaExpiracion'].touched || submitted) &&
-              FormRegistro.controls['FechaExpiracion'].hasError('required')
-            "
-          >
-            Dato requerido.
+              <mat-error
+                *ngIf="
+                  (FormRegistro.controls['Nombre'].touched || submitted) &&
+                  FormRegistro.controls['Nombre'].hasError('required')
+                "
+              >
+                Dato <strong>requerido.</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  (FormRegistro.controls['Nombre'].touched || submitted) &&
+                  FormRegistro.controls['Nombre'].hasError('pattern')
+                "
+              >
+                Dato texto, 4 a 55 caracteres.
+              </mat-error>
+            </div>
+            <!-- Apellido Titular -->
+            <div class="col-md-6">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Apellido...</mat-label>
+                <input
+                  formControlName="Apellido"
+                  matInput
+                  [errorStateMatcher]="matcher"
+                  [(ngModel)]="TarApellido"
+                />
+              </mat-form-field>
+              <mat-error
+                *ngIf="
+                  (FormRegistro.controls['Apellido'].touched || submitted) &&
+                  FormRegistro.controls['Apellido'].hasError('required')
+                "
+              >
+                Dato <strong>requerido.</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  (FormRegistro.controls['Apellido'].touched || submitted) &&
+                  FormRegistro.controls['Apellido'].hasError('pattern')
+                "
+              >
+                Dato texto, 4 a 55 caracteres.
+              </mat-error>
+            </div>
           </div>
-          <div
-            class="validacion"
-            *ngIf="
-              (FormRegistro.controls['FechaExpiracion'].touched || submitted) &&
-              FormRegistro.controls['FechaExpiracion'].hasError('pattern')
-            "
-          >
-            Dato fecha, formato mm/aaaa.
+          <div class="encabezado">
+            {{ DatosDeTarjeta }}
+          </div>
+          <div class="row">
+            <!-- Numero de Tarjeta -->
+            <div class="col-md-6">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Número...</mat-label>
+                <input
+                  formControlName="NumeroTarjeta"
+                  matInput
+                  [errorStateMatcher]="matcher"
+                  [(ngModel)]="TarNumero"
+                />
+              </mat-form-field>
+              <mat-error
+                *ngIf="
+                  (FormRegistro.controls['NumeroTarjeta'].touched ||
+                    submitted) &&
+                  FormRegistro.controls['NumeroTarjeta'].hasError('required')
+                "
+              >
+                Dato <strong>requerido.</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  (FormRegistro.controls['NumeroTarjeta'].touched ||
+                    submitted) &&
+                  FormRegistro.controls['NumeroTarjeta'].hasError('pattern')
+                "
+              >
+                No se reconoce como tarjeta Mastercard.
+              </mat-error>
+            </div>
+            <!-- Codigo de Seguridad -->
+            <div class="col-md-3">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>CNN...</mat-label>
+                <input
+                  formControlName="CodigoSeguridad"
+                  matInput
+                  [errorStateMatcher]="matcher"
+                  [(ngModel)]="TarCodigoSeguridad"
+                />
+              </mat-form-field>
+              <mat-error
+                *ngIf="
+                  (FormRegistro.controls['CodigoSeguridad'].touched ||
+                    submitted) &&
+                  FormRegistro.controls['CodigoSeguridad'].hasError('required')
+                "
+              >
+                Dato <strong>requerido.</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  (FormRegistro.controls['CodigoSeguridad'].touched ||
+                    submitted) &&
+                  FormRegistro.controls['CodigoSeguridad'].hasError('pattern')
+                "
+              >
+                Dato numérico, 3 dígitos.
+              </mat-error>
+            </div>
+            <!--Fecha de Expiracion-->
+            <div class="col-md-3">
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Fecha Expiración...</mat-label>
+                <input
+                  matInput
+                  [min]="minDate"
+                  formControlName="FechaExpiracion"
+                  placeholder="mm/aaaa"
+                  [errorStateMatcher]="matcher"
+                  [(ngModel)]="TarFechaExpiracion"
+                />
+              </mat-form-field>
+              <mat-error
+                *ngIf="
+                  (FormRegistro.controls['FechaExpiracion'].touched ||
+                    submitted) &&
+                  FormRegistro.controls['FechaExpiracion'].hasError('required')
+                "
+              >
+                Dato <strong>requerido.</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  (FormRegistro.controls['FechaExpiracion'].touched ||
+                    submitted) &&
+                  FormRegistro.controls['FechaExpiracion'].hasError('pattern')
+                "
+              >
+                Dato fecha, formato mm/aaaa.
+              </mat-error>
+            </div>
           </div>
         </div>
+        <br />
+        <div class="encabezado">
+          {{ CuandoPedido }}
+          <input
+            type="radio"
+            class="rb-seleccion"
+            name="MomentoEntrega"
+            id="ahora"
+            checked="checked"
+            (click)="MostrarCamposEntrega($event)"
+          />Lo Antes Posible
+          <input
+            type="radio"
+            class="rb-seleccion"
+            name="MomentoEntrega"
+            id="fechaEspec"
+            (click)="MostrarCamposEntrega($event)"
+          />Fecha/Hora Específica
+        </div>
+
+        <div class="row" *ngIf="HoraEspecifica">
+          <!-- Fecha Entrega -->
+          <div class="col-md-4">
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Fecha...</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                formControlName="FechaEntrega"
+                [(ngModel)]="FechaEntrega"
+                [min]="minDate"
+                [max]="maxDate"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-error
+              *ngIf="
+                (FormRegistro.controls['FechaEntrega'].touched || submitted) &&
+                FormRegistro.controls['FechaEntrega'].hasError('required')
+              "
+            >
+              Dato <strong>requerido.</strong>
+            </mat-error>
+            <mat-error
+              *ngIf="
+                (FormRegistro.controls['FechaEntrega'].touched || submitted) &&
+                FormRegistro.controls['FechaEntrega'].hasError('pattern')
+              "
+            >
+              Ingrese una fecha correcta.
+            </mat-error>
+          </div>
+          <!--Hora Entrega-->
+          <div class="col-md-4">
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Hora...</mat-label>
+              <input
+                matInput
+                type="time"
+                min="08:00:00"
+                required
+                formControlName="HoraEntrega"
+                [(ngModel)]="HoraEntrega"
+              />
+            </mat-form-field>
+            <mat-error
+              *ngIf="
+                (FormRegistro.controls['HoraEntrega'].touched || submitted) &&
+                FormRegistro.controls['HoraEntrega'].hasError('required')
+              "
+            >
+              Dato <strong>requerido.</strong>
+            </mat-error>
+          </div>
+        </div>
+      </mat-card-content>
+
+      <!--texto: Revisar los datos ingresados...-->
+      <div
+        *ngIf="submitted && FormRegistro.invalid"
+        class="row alert alert-danger mensajesAlert"
+      >
+        {{ Mensajes["RD"] }}
       </div>
+    </form>
+
+    <!-- Botones Grabar y Cancelar -->
+    <div>
+      <button class="btn botones btnGrabar" (click)="Grabar()">Grabar</button>
+      <button class="btn botones btnCancelar">Cancelar</button>
     </div>
-
-    <div class="encabezado">
-      {{ CuandoPedido }}
-      <input
-        type="radio"
-        class="rb-seleccion"
-        name="MomentoEntrega"
-        id="ahora"
-        checked="checked"
-        (click)="MostrarCamposEntrega($event)"
-      />Lo Antes Posible
-      <input
-        type="radio"
-        class="rb-seleccion"
-        name="MomentoEntrega"
-        id="fechaEspec"
-        (click)="MostrarCamposEntrega($event)"
-      />Fecha/Hora Específica
-    </div>
-
-    <!--Hora Entrega-->
-    <div class="row" *ngIf="HoraEspecifica">
-      <div class="col-md-4">
-        <input
-          type="time"
-          name="HoraEntrega"
-          class="form-control"
-          formControlName="HoraEntrega"
-          placeholder="Hora..."
-          [(ngModel)]="HoraEntrega"
-          [ngClass]="{
-            'is-invalid':
-              (FormRegistro.controls['HoraEntrega'].touched || submitted) &&
-              FormRegistro.controls['HoraEntrega'].errors
-          }"
-        />
-        <div
-          class="validacion"
-          *ngIf="
-            (FormRegistro.controls['HoraEntrega'].touched || submitted) &&
-            FormRegistro.controls['HoraEntrega'].hasError('required')
-          "
-        >
-          Dato requerido.
-        </div>
-        <div
-          class="validacion"
-          *ngIf="
-            (FormRegistro.controls['HoraEntrega'].touched || submitted) &&
-            FormRegistro.controls['HoraEntrega'].hasError('pattern')
-          "
-        >
-          Hora no valida, formato hh:mm 24hs.
-        </div>
-      </div>
-      <!-- Fecha Entrega -->
-      <div class="col-md-4">
-        <mat-form-field class="form-control" appearance="standard">
-          <mat-label></mat-label>
-          <input matInput [matDatepicker]="picker" />
-          <mat-hint></mat-hint>
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-        <!-- <input
-              type="date"
-              name="FechaEntrega"
-              class="form-control"
-              formControlName="FechaEntrega"
-              placeholder="Fecha..."
-              [(ngModel)]="FechaEntrega"
-              [ngClass]="{
-                'is-invalid':
-                  (FormRegistro.controls['FechaEntrega'].touched || submitted) &&
-                  FormRegistro.controls['FechaEntrega'].errors
-              }"
-            /> -->
-        <div
-          class="validacion"
-          *ngIf="
-            (FormRegistro.controls['FechaEntrega'].touched || submitted) &&
-            FormRegistro.controls['FechaEntrega'].hasError('required')
-          "
-        >
-          Dato requerido.
-        </div>
-        <div
-          class="validacion"
-          *ngIf="
-            (FormRegistro.controls['FechaEntrega'].touched || submitted) &&
-            FormRegistro.controls['FechaEntrega'].hasError('pattern')
-          "
-        >
-          Ingrese una fecha correcta.
-        </div>
-      </div>
-    </div>
-  </mat-card-content>
-
-  <!--texto: Revisar los datos ingresados...-->
-  <div
-    *ngIf="submitted && FormRegistro.invalid"
-    class="row alert alert-danger mensajesAlert"
-  >
-    {{ Mensajes["RD"] }}
   </div>
-</form>
 
-<!-- Botones Grabar y Cancelar -->
-<div>
-  <button class="btn botones btnGrabar" (click)="Grabar()">Grabar</button>
-  <button class="btn botones btnCancelar">Cancelar</button>
+  <div class="col-md-5">
+    <form style="margin: 30px 100px 20px 0px">
+      <div class="row pedido">
+        <div class="col-md-1" style="margin-right: 14px">
+          <img
+            src="https://3.bp.blogspot.com/-9rHIvHNdgZk/Vxopw3gNXeI/AAAAAAAAZgI/JPNy3hWsdewSP6W-358RHIK-virV8wYsgCLcB/s1600/logo-nuevo.png"
+            width="50"
+            height="50"
+          />
+        </div>
+        <div class="col-md-10">
+          <p style="margin-bottom: -1px; padding-top: 0.5em">
+            El Club De La Milanesa
+          </p>
+          <small>25 - 40 min</small>
+        </div>
+      </div>
+      <div class="row pedido" *ngIf="!BorroPedido">
+        <div class="col-md-10">
+          <p class="milanesa">Milanesa Napolitana &nbsp; x &nbsp; 1</p>
+          <small style="padding-left: 15px">subtotal: $1.199</small><br />
+          <small style="padding-left: 15px">envio: $299</small>
+        </div>
+        <div class="col-md-2">
+          <div class="contenedor-btnBorrar">
+            <button
+              mat-mini-fab
+              style="background-color: rgb(254, 83, 83)"
+              (click)="BorrarPedido($event)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-10">
+          <p class="milanesa">Total:</p>
+        </div>
+        <div class="col-md-2">
+          <p class="milanesa" style="float: right">
+            <b>$ {{ Total }}</b>
+          </p>
+        </div>
+      </div>
+
+      <div
+        *ngIf="submitted && BorroPedido"
+        class="row alert alert-danger mensajesAlert"
+      >
+        {{ Mensajes["BP"] }}
+      </div>
+    </form>
+  </div>
 </div>

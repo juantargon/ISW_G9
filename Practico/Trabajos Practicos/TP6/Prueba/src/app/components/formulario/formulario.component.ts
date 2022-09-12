@@ -1,9 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import {
   FormGroup,
+  FormGroupDirective,
+  NgForm,
   FormControl,
   Validators,
 } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
+
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 @Component({
   selector: 'app-formulario',
@@ -18,27 +29,34 @@ export class FormularioComponent implements OnInit {
   CuandoPedido = '¿Cuándo desea recibir el pedido?';
 
   PagoEfectivo = true;
-  Monto = '';
+  Monto = 0;
   TarNombre = '';
   TarApellido = '';
   TarNumero = '';
   TarCodigoSeguridad = '';
   TarFechaExpiracion = '';
 
+  minDate = new Date();
+  maxDate = new Date(2022,8,20);
+
   HoraEspecifica = false;
   HoraEntrega = '';
   FechaEntrega = '';
 
+  Total = 1499;
+  BorroPedido =  false;
+
   Mensajes = {
     RD: ' Revisar los datos ingresados...',
+    BP: ' Pedido cancelado: No hay productos en el carrito...'
   };
 
   // opciones del combo activo
   OpcionesCiudad = [
-    { Id: 1, Nombre: 'BUENOS AIRES' },
-    { Id: 2, Nombre: 'CORDOBA' },
-    { Id: 3, Nombre: 'MENDOZA' },
-    { Id: 4, Nombre: 'SALTA' },
+    { value: 1, Nombre: 'BUENOS AIRES' },
+    { value: 2, Nombre: 'CORDOBA' },
+    { value: 3, Nombre: 'MENDOZA' },
+    { value: 4, Nombre: 'SALTA' },
   ];
 
   FormRegistro = new FormGroup({
@@ -50,7 +68,9 @@ export class FormularioComponent implements OnInit {
       Validators.required,
       Validators.pattern('[0-9]{1,7}'),
     ]),
-    Ciudad: new FormControl(null, [Validators.required]),
+    Ciudad: new FormControl('', [
+      Validators.required,
+    ]),
     Aclaraciones: new FormControl(''),
 
     Monto: new FormControl(null, [
@@ -63,10 +83,11 @@ export class FormularioComponent implements OnInit {
     NumeroTarjeta: new FormControl(''),
     CodigoSeguridad: new FormControl(''),
     FechaExpiracion: new FormControl(''),
-
     HoraEntrega: new FormControl(''),
     FechaEntrega: new FormControl(''),
   });
+
+  matcher = new MyErrorStateMatcher();
 
   submitted = false;
 
@@ -78,7 +99,7 @@ export class FormularioComponent implements OnInit {
   Grabar() {
     this.submitted = true;
     // verificar que los validadores esten OK
-    if (this.FormRegistro.invalid) {
+    if (this.FormRegistro.invalid || this.BorroPedido || this.Monto==0) {
       return;
     }
     alert('Se registro su pedido con exito.');
@@ -119,7 +140,7 @@ export class FormularioComponent implements OnInit {
     } else {
       this.PagoEfectivo = false;
 
-      this.Monto = '';
+      this.Monto = 0;
 
       Monto?.clearValidators();
       Monto?.updateValueAndValidity();
@@ -142,7 +163,7 @@ export class FormularioComponent implements OnInit {
       ]);
       FechaExpiracion?.setValidators([
         Validators.required,
-        Validators.pattern('(09|1[012])[-/](20)[2-9]{2}'),
+        Validators.pattern('(0[9]|1[012])[/](20)2[2-9]|3[0-9]|4[0-9]'),
       ]);
     }
   }
@@ -168,7 +189,7 @@ export class FormularioComponent implements OnInit {
       ]);
       FechaEntrega?.setValidators([
         Validators.required,
-        Validators.pattern('(2022)[-](09)[-](0[9]|[12][0-9]|3[01])'),
+        // Validators.pattern('(2022)[-](09)[-](0[9]|[12][0-9]|3[01])'),
       ]);
     } else {
       this.HoraEspecifica = false;
@@ -182,5 +203,10 @@ export class FormularioComponent implements OnInit {
       FechaEntrega?.clearValidators();
       FechaEntrega?.updateValueAndValidity();
     }
+  }
+
+  BorrarPedido(event:Event) {
+    this.BorroPedido = true;
+    this.Total = 0;
   }
 }

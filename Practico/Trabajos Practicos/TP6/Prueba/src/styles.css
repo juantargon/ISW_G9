@@ -1,28 +1,29 @@
 body {
-  background-color: #e5ecd7;
-  margin: 0; 
+  background-color: #fbf6df;
+  margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.full-width{
+.full-width {
   width: 100%;
+  margin-bottom: -1em;
 }
 
 /* pie de la pagina */
 footer {
   padding: 1rem;
 }
-  
+
 .encabezado {
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 400;
   font-style: italic;
-  color: rgb(121, 121, 121);
+  color: rgb(74, 74, 74);
+  padding-bottom: 0.5em;
   border-bottom-style: solid;
-  border-color: rgb(202, 202, 202);
-  border-bottom-width: thin;
-  padding-bottom: 0.1em;
-  margin-bottom: 1em;
+  border-bottom-width: 4px;
+  border-color: #8c8c8c;
+  margin-bottom: 0.8em;
 }
 
 .rb-seleccion {
@@ -31,23 +32,19 @@ footer {
 }
 
 .pagoTarjeta {
-  margin-left: 15px;
+  margin-left: 20px;
 }
 
 /* todos los formularios */
 form {
-  background-color: #f7f7f7;
+  background-color: #fdfdfd;
   border-radius: 0.5rem;
   border-style: solid;
-  border-color: #f7f7f7;
+  border-color: #fdfdfd;
   border-width: thick;
-  margin: 59px 50px 20px 100px;
+  margin: 30px 50px 20px 100px;
   padding: 1em;
-  box-shadow: 0rem 0rem 2rem 0.5rem rgb(192, 192, 192);
-}
-
-.row {
-  margin-bottom: 1em;
+  box-shadow: 0rem 0rem 2rem 0.5rem rgba(169, 169, 169, 0.792);
 }
 
 /* espacio en los botones contenidos en un div con esta clase */
@@ -66,21 +63,11 @@ form {
 }
 
 .btnCancelar {
-  background-color: #d6cda4;
+  background-color: #c6bd94;
 }
 
-/* mensajes de validacion */
-.validacion {
-  color: rgb(255, 0, 0);
-  font-size: 0.9em;
-  font-style: italic;
-  padding-bottom: 0em;
-}
-
-/* mensajes de alerta al buscar y grabar */
 .mensajesAlert {
-  /* color: #495057; */
-  margin: 0rem 0.5rem 0rem 0.5rem;
+  margin: 1rem 0.15rem 0rem 0.15rem;
 }
 
 .paginador {
@@ -92,13 +79,17 @@ form {
 /* todos los imput a mayusculas, y no sus placeholders*/
 input {
   text-transform: uppercase;
-  /* margin-bottom: 0.2em;  */
   /*separa renglones*/
 }
 ::placeholder {
   text-transform: none;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
