@@ -22,105 +22,105 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./formulario.component.css'],
 })
 export class FormularioComponent implements OnInit {
-  DirecDeEntrega = 'Dirección de Entrega';
-  FormaDePago = 'Forma de Pago:';
-  DatosDelTitular = 'Datos Del Titular';
-  DatosDeTarjeta = 'Datos de Tarjeta';
-  CuandoPedido = '¿Cuándo desea recibir el pedido?';
+  DirecDeEntrega = "Dirección de Entrega";
+  FormaDePago = "Forma de Pago:";
+  DatosDelTitular = "Datos Del Titular";
+  DatosDeTarjeta = "Datos de Tarjeta";
+  CuandoPedido = "¿Cuándo desea recibir el pedido?";
 
-  PagoEfectivo = true;
+  FlagPagoEfectivo = true;
   Monto = 0;
-  TarNombre = '';
-  TarApellido = '';
-  TarNumero = '';
-  TarCodigoSeguridad = '';
-  TarFechaExpiracion = '';
+  TarNombre = "";
+  TarApellido = "";
+  TarNumero = "";
+  TarCodigoSeguridad = "";
+  TarFechaExpiracion = "";
 
-  minDate = new Date();
-  maxDate = new Date(2022,8,20);
+  MinDate = new Date();
+  MaxDate = new Date(2022,8,20);
 
-  HoraEspecifica = false;
-  HoraEntrega = '';
-  FechaEntrega = '';
+  FlagHoraEspecifica = false;
+  HoraEntrega = "";
+  FechaEntrega = "";
 
   Total = 1499;
-  BorroPedido =  false;
+  FlagBorroPedido =  false;
 
   Mensajes = {
-    RD: ' Revisar los datos ingresados...',
-    BP: ' Pedido cancelado: No hay productos en el carrito...'
+    RD: " Revisar los datos ingresados...",
+    BP: " Pedido cancelado: No hay productos en el carrito..."
   };
 
   // opciones del combo activo
   OpcionesCiudad = [
-    { value: 1, Nombre: 'BUENOS AIRES' },
-    { value: 2, Nombre: 'CORDOBA' },
-    { value: 3, Nombre: 'MENDOZA' },
-    { value: 4, Nombre: 'SALTA' },
+    { value: 1, Nombre: "BUENOS AIRES" },
+    { value: 2, Nombre: "CORDOBA" },
+    { value: 3, Nombre: "MENDOZA" },
+    { value: 4, Nombre: "SALTA" },
   ];
 
   FormRegistro = new FormGroup({
-    Calle: new FormControl('', [
+    Calle: new FormControl("", [
       Validators.required,
-      Validators.pattern('[a-zA-Z ]*'),
+      Validators.pattern("[a-zA-Z ]*"),
     ]),
     Numero: new FormControl(null, [
       Validators.required,
-      Validators.pattern('[0-9]{1,7}'),
+      Validators.pattern("[0-9]{1,7}"),
     ]),
     Ciudad: new FormControl('', [
       Validators.required,
     ]),
-    Aclaraciones: new FormControl(''),
+    Aclaraciones: new FormControl(""),
 
     Monto: new FormControl(null, [
       Validators.required,
-      Validators.pattern('[0-9]{1,5}'),
+      Validators.pattern("[0-9]{1,5}"),
     ]),
 
-    Nombre: new FormControl(''),
-    Apellido: new FormControl(''),
-    NumeroTarjeta: new FormControl(''),
-    CodigoSeguridad: new FormControl(''),
-    FechaExpiracion: new FormControl(''),
-    HoraEntrega: new FormControl(''),
-    FechaEntrega: new FormControl(''),
+    Nombre: new FormControl(""),
+    Apellido: new FormControl(""),
+    NumeroTarjeta: new FormControl(""),
+    CodigoSeguridad: new FormControl(""),
+    FechaExpiracion: new FormControl(""),
+    HoraEntrega: new FormControl(""),
+    FechaEntrega: new FormControl(""),
   });
 
-  matcher = new MyErrorStateMatcher();
+  Matcher = new MyErrorStateMatcher();
 
-  submitted = false;
+  Submitted = false;
 
   constructor() {}
 
   ngOnInit(): void {}
 
   // grabar tanto altas como modificaciones
-  Grabar() {
-    this.submitted = true;
+  grabar() {
+    this.Submitted = true;
     // verificar que los validadores esten OK
-    if (this.FormRegistro.invalid || this.BorroPedido || this.Monto < this.Total) {
+    if (this.FormRegistro.invalid || this.FlagBorroPedido || this.Monto < this.Total) {
       return;
     }
-    alert('Se registro su pedido con exito.');
+    alert("Se registro su pedido con exito.");
   }
 
-  MostrarCamposPago(event: Event) {
-    const Monto = this.FormRegistro.get('Monto');
-    const Nombre = this.FormRegistro.get('Nombre');
-    const Apellido = this.FormRegistro.get('Apellido');
-    const NumeroTarjeta = this.FormRegistro.get('NumeroTarjeta');
-    const CodigoSeguridad = this.FormRegistro.get('CodigoSeguridad');
-    const FechaExpiracion = this.FormRegistro.get('FechaExpiracion');
+  mostrarCamposPago(event: Event) {
+    const Monto = this.FormRegistro.get("Monto");
+    const Nombre = this.FormRegistro.get("Nombre");
+    const Apellido = this.FormRegistro.get("Apellido");
+    const NumeroTarjeta = this.FormRegistro.get("NumeroTarjeta");
+    const CodigoSeguridad = this.FormRegistro.get("CodigoSeguridad");
+    const FechaExpiracion = this.FormRegistro.get("FechaExpiracion");
 
-    if ((<HTMLInputElement>event.target).id == 'efectivo') {
-      this.PagoEfectivo = true;
+    if ((<HTMLInputElement>event.target).id == "efectivo") {
+      this.FlagPagoEfectivo = true;
 
-      this.LimpiarDatosTarjeta();
+      this.limpiarDatosTarjeta();
 
       Monto?.setValidators([
         Validators.required,
-        Validators.pattern('[0-9]{1,5}'),
+        Validators.pattern("[0-9]{1,5}"),
       ]);
 
       Nombre?.clearValidators();
@@ -138,7 +138,7 @@ export class FormularioComponent implements OnInit {
       FechaExpiracion?.clearValidators();
       FechaExpiracion?.updateValueAndValidity();
     } else {
-      this.PagoEfectivo = false;
+      this.FlagPagoEfectivo = false;
 
       this.Monto = 0;
 
@@ -147,55 +147,54 @@ export class FormularioComponent implements OnInit {
 
       Nombre?.setValidators([
         Validators.required,
-        Validators.pattern('[a-zA-Z ]*'),
+        Validators.pattern("[a-zA-Z ]*"),
       ]);
       Apellido?.setValidators([
         Validators.required,
-        Validators.pattern('[a-zA-Z ]*'),
+        Validators.pattern("[a-zA-Z ]*"),
       ]);
       NumeroTarjeta?.setValidators([
         Validators.required,
-        Validators.pattern('5[0-9]{15}'),
+        Validators.pattern("5[0-9]{15}"),
       ]);
       CodigoSeguridad?.setValidators([
         Validators.required,
-        Validators.pattern('[0-9]{3}'),
+        Validators.pattern("[0-9]{3}"),
       ]);
       FechaExpiracion?.setValidators([
         Validators.required,
-        Validators.pattern('(0[9]|1[012])[/](20)(2[2-9]|3[0-9]|4[0-9])'),
+        Validators.pattern("(0[9]|1[012])[/](20)(2[2-9]|3[0-9]|4[0-9])"),
       ]);
     }
   }
 
-  LimpiarDatosTarjeta() {
-    this.TarNombre = '';
-    this.TarApellido = '';
-    this.TarNumero = '';
-    this.TarCodigoSeguridad = '';
-    this.TarFechaExpiracion = '';
+  limpiarDatosTarjeta() {
+    this.TarNombre = "";
+    this.TarApellido = "";
+    this.TarNumero = "";
+    this.TarCodigoSeguridad = "";
+    this.TarFechaExpiracion = "";
   }
 
-  MostrarCamposEntrega(event: Event) {
-    const HoraEntrega = this.FormRegistro.get('HoraEntrega');
-    const FechaEntrega = this.FormRegistro.get('FechaEntrega');
+  mostrarCamposEntrega(event: Event) {
+    const HoraEntrega = this.FormRegistro.get("HoraEntrega");
+    const FechaEntrega = this.FormRegistro.get("FechaEntrega'");
 
-    if ((<HTMLInputElement>event.target).id == 'fechaEspec') {
-      this.HoraEspecifica = true;
+    if ((<HTMLInputElement>event.target).id == "fechaEspec") {
+      this.FlagHoraEspecifica = true;
 
       HoraEntrega?.setValidators([
         Validators.required,
-        Validators.pattern('(0[0-9]|1[0-9]|2[0-3])[:]([0-5][0-9])'),
+        Validators.pattern("(0[0-9]|1[0-9]|2[0-3])[:]([0-5][0-9])"),
       ]);
       FechaEntrega?.setValidators([
         Validators.required,
-        // Validators.pattern('(2022)[-](09)[-](0[9]|[12][0-9]|3[01])'),
       ]);
     } else {
-      this.HoraEspecifica = false;
+      this.FlagHoraEspecifica = false;
 
-      this.HoraEntrega = '';
-      this.FechaEntrega = '';
+      this.HoraEntrega = "";
+      this.FechaEntrega = "";
 
       HoraEntrega?.clearValidators();
       HoraEntrega?.updateValueAndValidity();
@@ -205,8 +204,8 @@ export class FormularioComponent implements OnInit {
     }
   }
 
-  BorrarPedido(event:Event) {
-    this.BorroPedido = true;
+  borrarPedido(event:Event) {
+    this.FlagBorroPedido = true;
     this.Total = 0;
   }
 }

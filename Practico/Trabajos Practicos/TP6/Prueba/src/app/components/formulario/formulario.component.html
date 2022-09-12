@@ -13,13 +13,13 @@
               <input
                 formControlName="Calle"
                 matInput
-                [errorStateMatcher]="matcher"
+                [errorStateMatcher]="Matcher"
                 required
               />
             </mat-form-field>
             <mat-error
               *ngIf="
-                (FormRegistro.controls['Calle'].touched || submitted) &&
+                (FormRegistro.controls['Calle'].touched || Submitted) &&
                 FormRegistro.controls['Calle'].hasError('required')
               "
             >
@@ -27,7 +27,7 @@
             </mat-error>
             <mat-error
               *ngIf="
-                (FormRegistro.controls['Calle'].touched || submitted) &&
+                (FormRegistro.controls['Calle'].touched || Submitted) &&
                 FormRegistro.controls['Calle'].hasError('pattern')
               "
             >
@@ -42,12 +42,12 @@
               <input
                 formControlName="Numero"
                 matInput
-                [errorStateMatcher]="matcher"
+                [errorStateMatcher]="Matcher"
               />
             </mat-form-field>
             <mat-error
               *ngIf="
-                (FormRegistro.controls['Numero'].touched || submitted) &&
+                (FormRegistro.controls['Numero'].touched || Submitted) &&
                 FormRegistro.controls['Numero'].hasError('required')
               "
             >
@@ -55,7 +55,7 @@
             </mat-error>
             <mat-error
               *ngIf="
-                (FormRegistro.controls['Numero'].touched || submitted) &&
+                (FormRegistro.controls['Numero'].touched || Submitted) &&
                 FormRegistro.controls['Numero'].hasError('pattern')
               "
             >
@@ -74,7 +74,7 @@
               <mat-label>Ciudad...</mat-label>
               <mat-select
                 formControlName="Ciudad"
-                [errorStateMatcher]="matcher"
+                [errorStateMatcher]="Matcher"
                 required
               >
                 <mat-option
@@ -86,7 +86,7 @@
               </mat-select>
               <mat-error
                 *ngIf="
-                  (FormRegistro.controls['Ciudad'].touched || submitted) &&
+                  (FormRegistro.controls['Ciudad'].touched || Submitted) &&
                   FormRegistro.controls['Ciudad'].hasError('required')
                 "
                 style="font-size: 14px"
@@ -120,19 +120,19 @@
             name="Pago"
             id="efectivo"
             checked="checked"
-            (click)="MostrarCamposPago($event)"
+            (click)="mostrarCamposPago($event)"
           />Efectivo
           <input
             type="radio"
             class="rb-seleccion"
             name="Pago"
             id="Tarjeta"
-            (click)="MostrarCamposPago($event)"
+            (click)="mostrarCamposPago($event)"
           />Tarjeta de Crédito/Débito
         </div>
 
         <!--campo Monto-->
-        <div class="row" *ngIf="PagoEfectivo">
+        <div class="row" *ngIf="FlagPagoEfectivo">
           <div class="col-sm-8 col-md-6">
             <mat-form-field class="full-width" appearance="outline">
               <mat-label>Monto...</mat-label>
@@ -140,13 +140,13 @@
                 formControlName="Monto"
                 type="number"
                 matInput
-                [errorStateMatcher]="matcher"
+                [errorStateMatcher]="Matcher"
                 [(ngModel)]="Monto"
               />
             </mat-form-field>
             <mat-error
               *ngIf="
-                (FormRegistro.controls['Monto'].touched || submitted) &&
+                (FormRegistro.controls['Monto'].touched || Submitted) &&
                 FormRegistro.controls['Monto'].hasError('required')
               "
             >
@@ -154,7 +154,7 @@
             </mat-error>
             <mat-error
               *ngIf="
-                (FormRegistro.controls['Monto'].touched || submitted) &&
+                (FormRegistro.controls['Monto'].touched || Submitted) &&
                 Monto < Total
               "
             >
@@ -162,7 +162,7 @@
             </mat-error>
             <mat-error
               *ngIf="
-                (FormRegistro.controls['Monto'].touched || submitted) &&
+                (FormRegistro.controls['Monto'].touched || Submitted) &&
                 FormRegistro.controls['Monto'].hasError('pattern')
               "
             >
@@ -171,7 +171,7 @@
           </div>
         </div>
 
-        <div class="pagoTarjeta" *ngIf="!PagoEfectivo">
+        <div class="pagoTarjeta" *ngIf="!FlagPagoEfectivo">
           <div class="encabezado">
             {{ DatosDelTitular }}
           </div>
@@ -183,14 +183,14 @@
                 <input
                   formControlName="Nombre"
                   matInput
-                  [errorStateMatcher]="matcher"
+                  [errorStateMatcher]="Matcher"
                   [(ngModel)]="TarNombre"
                 />
               </mat-form-field>
 
               <mat-error
                 *ngIf="
-                  (FormRegistro.controls['Nombre'].touched || submitted) &&
+                  (FormRegistro.controls['Nombre'].touched || Submitted) &&
                   FormRegistro.controls['Nombre'].hasError('required')
                 "
               >
@@ -198,7 +198,7 @@
               </mat-error>
               <mat-error
                 *ngIf="
-                  (FormRegistro.controls['Nombre'].touched || submitted) &&
+                  (FormRegistro.controls['Nombre'].touched || Submitted) &&
                   FormRegistro.controls['Nombre'].hasError('pattern')
                 "
               >
@@ -212,13 +212,13 @@
                 <input
                   formControlName="Apellido"
                   matInput
-                  [errorStateMatcher]="matcher"
+                  [errorStateMatcher]="Matcher"
                   [(ngModel)]="TarApellido"
                 />
               </mat-form-field>
               <mat-error
                 *ngIf="
-                  (FormRegistro.controls['Apellido'].touched || submitted) &&
+                  (FormRegistro.controls['Apellido'].touched || Submitted) &&
                   FormRegistro.controls['Apellido'].hasError('required')
                 "
               >
@@ -226,7 +226,7 @@
               </mat-error>
               <mat-error
                 *ngIf="
-                  (FormRegistro.controls['Apellido'].touched || submitted) &&
+                  (FormRegistro.controls['Apellido'].touched || Submitted) &&
                   FormRegistro.controls['Apellido'].hasError('pattern')
                 "
               >
@@ -245,14 +245,14 @@
                 <input
                   formControlName="NumeroTarjeta"
                   matInput
-                  [errorStateMatcher]="matcher"
+                  [errorStateMatcher]="Matcher"
                   [(ngModel)]="TarNumero"
                 />
               </mat-form-field>
               <mat-error
                 *ngIf="
                   (FormRegistro.controls['NumeroTarjeta'].touched ||
-                    submitted) &&
+                    Submitted) &&
                   FormRegistro.controls['NumeroTarjeta'].hasError('required')
                 "
               >
@@ -261,7 +261,7 @@
               <mat-error
                 *ngIf="
                   (FormRegistro.controls['NumeroTarjeta'].touched ||
-                    submitted) &&
+                    Submitted) &&
                   FormRegistro.controls['NumeroTarjeta'].hasError('pattern')
                 "
               >
@@ -275,14 +275,14 @@
                 <input
                   formControlName="CodigoSeguridad"
                   matInput
-                  [errorStateMatcher]="matcher"
+                  [errorStateMatcher]="Matcher"
                   [(ngModel)]="TarCodigoSeguridad"
                 />
               </mat-form-field>
               <mat-error
                 *ngIf="
                   (FormRegistro.controls['CodigoSeguridad'].touched ||
-                    submitted) &&
+                    Submitted) &&
                   FormRegistro.controls['CodigoSeguridad'].hasError('required')
                 "
               >
@@ -291,7 +291,7 @@
               <mat-error
                 *ngIf="
                   (FormRegistro.controls['CodigoSeguridad'].touched ||
-                    submitted) &&
+                    Submitted) &&
                   FormRegistro.controls['CodigoSeguridad'].hasError('pattern')
                 "
               >
@@ -304,17 +304,17 @@
                 <mat-label>Fecha Expiración...</mat-label>
                 <input
                   matInput
-                  [min]="minDate"
+                  [min]="MinDate"
                   formControlName="FechaExpiracion"
                   placeholder="mm/aaaa"
-                  [errorStateMatcher]="matcher"
+                  [errorStateMatcher]="Matcher"
                   [(ngModel)]="TarFechaExpiracion"
                 />
               </mat-form-field>
               <mat-error
                 *ngIf="
                   (FormRegistro.controls['FechaExpiracion'].touched ||
-                    submitted) &&
+                    Submitted) &&
                   FormRegistro.controls['FechaExpiracion'].hasError('required')
                 "
               >
@@ -323,7 +323,7 @@
               <mat-error
                 *ngIf="
                   (FormRegistro.controls['FechaExpiracion'].touched ||
-                    submitted) &&
+                    Submitted) &&
                   FormRegistro.controls['FechaExpiracion'].hasError('pattern')
                 "
               >
@@ -341,18 +341,18 @@
             name="MomentoEntrega"
             id="ahora"
             checked="checked"
-            (click)="MostrarCamposEntrega($event)"
+            (click)="mostrarCamposEntrega($event)"
           />Lo Antes Posible
           <input
             type="radio"
             class="rb-seleccion"
             name="MomentoEntrega"
             id="fechaEspec"
-            (click)="MostrarCamposEntrega($event)"
+            (click)="mostrarCamposEntrega($event)"
           />Fecha/Hora Específica
         </div>
 
-        <div class="row" *ngIf="HoraEspecifica">
+        <div class="row" *ngIf="FlagHoraEspecifica">
           <!-- Fecha Entrega -->
           <div class="col-md-4">
             <mat-form-field class="full-width" appearance="outline">
@@ -362,8 +362,8 @@
                 [matDatepicker]="picker"
                 formControlName="FechaEntrega"
                 [(ngModel)]="FechaEntrega"
-                [min]="minDate"
-                [max]="maxDate"
+                [min]="MinDate"
+                [max]="MaxDate"
               />
               <mat-datepicker-toggle
                 matSuffix
@@ -373,7 +373,7 @@
             </mat-form-field>
             <mat-error
               *ngIf="
-                (FormRegistro.controls['FechaEntrega'].touched || submitted) &&
+                (FormRegistro.controls['FechaEntrega'].touched || Submitted) &&
                 FormRegistro.controls['FechaEntrega'].hasError('required')
               "
             >
@@ -381,7 +381,7 @@
             </mat-error>
             <mat-error
               *ngIf="
-                (FormRegistro.controls['FechaEntrega'].touched || submitted) &&
+                (FormRegistro.controls['FechaEntrega'].touched || Submitted) &&
                 FormRegistro.controls['FechaEntrega'].hasError('pattern')
               "
             >
@@ -403,7 +403,7 @@
             </mat-form-field>
             <mat-error
               *ngIf="
-                (FormRegistro.controls['HoraEntrega'].touched || submitted) &&
+                (FormRegistro.controls['HoraEntrega'].touched || Submitted) &&
                 FormRegistro.controls['HoraEntrega'].hasError('required')
               "
             >
@@ -415,7 +415,7 @@
 
       <!--texto: Revisar los datos ingresados...-->
       <div
-        *ngIf="submitted && FormRegistro.invalid"
+        *ngIf="Submitted && FormRegistro.invalid"
         class="row alert alert-danger mensajesAlert"
       >
         {{ Mensajes["RD"] }}
@@ -424,7 +424,7 @@
 
     <!-- Botones Grabar y Cancelar -->
     <div>
-      <button class="btn botones btnGrabar" (click)="Grabar()">Grabar</button>
+      <button class="btn botones btnGrabar" (click)="grabar()">Grabar</button>
       <button class="btn botones btnCancelar">Cancelar</button>
     </div>
   </div>
@@ -446,7 +446,7 @@
           <small>25 - 40 min</small>
         </div>
       </div>
-      <div class="row pedido" *ngIf="!BorroPedido">
+      <div class="row pedido" *ngIf="!FlagBorroPedido">
         <div class="col-md-10">
           <p class="milanesa">Milanesa Napolitana &nbsp; x &nbsp; 1</p>
           <small style="padding-left: 15px">subtotal: $1.199</small><br />
@@ -457,7 +457,7 @@
             <button
               mat-mini-fab
               style="background-color: rgb(254, 83, 83)"
-              (click)="BorrarPedido($event)"
+              (click)="borrarPedido($event)"
             >
               <mat-icon>delete</mat-icon>
             </button>
@@ -476,7 +476,7 @@
       </div>
 
       <div
-        *ngIf="submitted && BorroPedido"
+        *ngIf="Submitted && FlagBorroPedido"
         class="row alert alert-danger mensajesAlert"
       >
         {{ Mensajes["BP"] }}

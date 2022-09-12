@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MenuComponent } from './components/menu/menu.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormularioComponent } from './components/formulario/formulario.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -24,7 +23,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
-  declarations: [AppComponent, MenuComponent, FormularioComponent, NavbarComponent, FooterComponent],
+  declarations: [AppComponent, FormularioComponent, NavbarComponent, FooterComponent],
   imports: [
     BrowserModule, 
     AppRoutingModule,
