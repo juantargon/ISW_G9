@@ -20,7 +20,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
-import _moment from 'moment';
+
 
 
 @NgModule({

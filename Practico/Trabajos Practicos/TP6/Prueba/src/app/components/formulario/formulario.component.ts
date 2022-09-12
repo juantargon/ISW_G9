@@ -99,7 +99,7 @@ export class FormularioComponent implements OnInit {
   Grabar() {
     this.submitted = true;
     // verificar que los validadores esten OK
-    if (this.FormRegistro.invalid || this.BorroPedido || this.Monto==0) {
+    if (this.FormRegistro.invalid || this.BorroPedido || this.Monto < this.Total) {
       return;
     }
     alert('Se registro su pedido con exito.');
