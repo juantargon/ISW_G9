@@ -1,0 +1,22 @@
+backlog
+ 
+● Loguear taxista
+● Ocupar taxi
+● Liberar taxi
+● Ver ubicación del pasajero
+● Buscar taxis cercanos
+● Pedir taxi /
+● Notificar a taxista solicitud de taxi 
+
+pedir taxi 5
+notificar a taxista solicitud de taxi 3
+
+ver ubicacion del pasajero 5
+ocupar taxi 2
+
+liberar taxi 2
+buscar taxis cercanos 3
+loguear taxista 2	
+
+
+
