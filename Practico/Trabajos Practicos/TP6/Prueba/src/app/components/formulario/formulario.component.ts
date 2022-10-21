@@ -37,7 +37,7 @@ export class FormularioComponent implements OnInit {
   TarFechaExpiracion = "";
 
   MinDate = new Date();
-  MaxDate = new Date(2022,8,20);
+  MaxDate = new Date(2022,9,27);
 
   FlagHoraEspecifica = false;
   HoraEntrega = "";
